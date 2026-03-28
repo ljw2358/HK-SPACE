@@ -1,208 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HK SPACE INDUSTRY | Global Aerospace & Defense</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK-SPACE</title>
+    <style>
+        :root {
+            --neon-orange: #ff6600;
+            --dark-bg: #000814;
+        }
 
-<style>
-body{
-margin:0;
-font-family: 'Segoe UI', sans-serif;
-background: radial-gradient(circle at top, #0b1a2f, #000814 70%);
-color:#e0f7ff;
-overflow-x:hidden;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.container{
-max-width:1100px;
-margin:auto;
-padding:80px 30px;
-animation: fadeIn 1.2s ease-in-out;
-}
+        /* 우측 상단 언어 선택 (홀로그램 스타일) */
+        .language-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+            max-width: 700px;
+            z-index: 100;
+        }
 
-h1{
-font-size:56px;
-color:#00eaff;
-letter-spacing:3px;
-text-shadow:0 0 25px rgba(0,255,255,0.6);
-margin-bottom:10px;
-}
+        .lang-btn {
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid var(--neon-orange);
+            color: var(--neon-orange);
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+        }
 
-h2{
-color:#7ce3ff;
-margin-top:50px;
-}
+        .lang-btn:hover {
+            background: var(--neon-orange);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-orange);
+        }
 
-p{
-line-height:1.8;
-font-size:18px;
-}
+        /* 메인 콘텐츠 */
+        .main-container {
+            text-align: center;
+            perspective: 1000px;
+        }
 
-.buttons{
-position:fixed;
-top:20px;
-right:20px;
-}
+        .brand-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            color: var(--neon-orange);
+            text-shadow: 0 0 15px var(--neon-orange), 0 0 30px var(--neon-orange);
+            margin-bottom: 30px;
+            letter-spacing: 10px;
+            animation: float 4s ease-in-out infinite;
+        }
 
-button{
-background:transparent;
-border:1px solid #00eaff;
-color:#00eaff;
-padding:8px 16px;
-margin-left:8px;
-cursor:pointer;
-transition:0.3s;
-}
+        .slogan-box {
+            min-height: 120px;
+            margin-bottom: 40px;
+        }
 
-button:hover{
-background:#00eaff;
-color:#000;
-box-shadow:0 0 15px #00eaff;
-}
+        .slogan {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
 
-.footer{
-margin-top:80px;
-font-size:14px;
-opacity:0.6;
-}
+        .target {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            letter-spacing: 2px;
+            color: var(--neon-orange);
+            font-weight: bold;
+        }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
-</style>
+        /* 이메일 정보 */
+        .contact {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .contact a {
+            color: var(--neon-orange);
+            text-decoration: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-20px) rotateX(-5deg); }
+        }
+
+        /* 배경 우주 효과 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            z-index: -1;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="buttons">
-<button onclick="setLang('en')">English</button>
-<button onclick="setLang('ko')">한국어</button>
-<button onclick="setLang('zh')">中文</button>
-<button onclick="setLang('ar')">العربية</button>
-</div>
+    <div class="stars"></div>
 
-<div class="container" id="content"></div>
+    <nav class="language-nav">
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('en')">English</button>
+        <button class="lang-btn" onclick="updateLang('zh')">Chinese</button>
+        <button class="lang-btn" onclick="updateLang('ar')">Arabic</button>
+        <button class="lang-btn" onclick="updateLang('hi')">Hindi</button>
+        <button class="lang-btn" onclick="updateLang('ru')">Russian</button>
+        <button class="lang-btn" onclick="updateLang('fr')">French</button>
+        <button class="lang-btn" onclick="updateLang('uk')">Ukraine</button>
+        <button class="lang-btn" onclick="updateLang('ja')">Japanese</button>
+        <button class="lang-btn" onclick="updateLang('es')">Spanish</button>
+        <button class="lang-btn" onclick="updateLang('pt')">Brazil</button>
+    </nav>
 
-<script>
+    <div class="main-container">
+        <h1 class="brand-name">HK-SPACE</h1>
+        <div class="slogan-box">
+            <div id="main-slogan" class="slogan">인류의 영원한 태양을 우주에 띄우다</div>
+            <div id="sub-slogan" class="target">고객의 성공을 위하여</div>
+        </div>
+    </div>
 
-const translations = {
+    <div class="contact">
+        Contact: <a href="mailto:info@space.com">info@space.com</a>
+    </div>
 
-en: `
-<h1>HK SPACE INDUSTRY</h1>
-<p><strong>Powering the Future Beyond Earth.</strong></p>
+    <script>
+        const content = {
+            'ko': { s: '인류의 영원한 태양을 우주에 띄우다', t: '고객의 성공을 위하여' },
+            'en': { s: "Launching Humanity's Eternal Sun into Space", t: 'For Customer Success' },
+            'zh': { s: '将人类永恒的太阳升入太空', t: '助力客户成功' },
+            'ar': { s: 'إطلاق شمس البشرية الأبدية في الفضاء', t: 'من أجل نجاح العملاء' },
+            'hi': { s: 'मानवता के शाश्वत सूर्य को अंतरिक्ष में प्रक्षेपित करना', t: 'ग्राहकों की सफलता के लिए' },
+            'ru': { s: 'Запуск вечного солнца человечества в космос', t: 'Ради успеха клиентов' },
+            'fr': { s: "Lancer le soleil éternel de l'humanité dans l'espace", t: 'Pour le succès du client' },
+            'uk': { s: 'Запуск вічного сонця людства в космос', t: 'Заради успіху клієнтів' },
+            'ja': { s: '人類の永遠의 太陽을 宇宙에 띄우다', t: '顧客의 成功을 위하여' },
+            'es': { s: 'Lanzando el sol eterno de la humanidad al espacio', t: 'Por el éxito del cliente' },
+            'pt': { s: 'Lançando o sol eterno da humanidade no espaço', t: 'Pelo sucesso do cliente' }
+        };
 
-<h2>Company Overview</h2>
-<p>HK SPACE INDUSTRY is a next-generation aerospace and defense technology enterprise focused on satellite systems, space launch platforms, orbital infrastructure, and strategic defense innovation. We engineer sovereign-grade technologies for governments, institutions, and global partners.</p>
+        function updateLang(lang) {
+            const slogan = document.getElementById('main-slogan');
+            const target = document.getElementById('sub-slogan');
+            
+            // 페이드 효과를 위해 잠시 투명하게
+            slogan.style.opacity = 0;
+            target.style.opacity = 0;
 
-<h2>Core Capabilities</h2>
-<p>• Satellite Manufacturing & Deployment<br>
-• Reusable Launch Systems<br>
-• Space Defense & Surveillance<br>
-• Orbital Data Infrastructure<br>
-• AI-Integrated Aerospace Platforms</p>
-
-<h2>Strategic Vision 2035</h2>
-<p>We aim to build an integrated space ecosystem — from Earth to orbit — delivering strategic advantage, commercial expansion, and sovereign technological leadership.</p>
-
-<p><strong>Investment Opportunity</strong><br>
-High-growth aerospace market. Government-aligned projects. Long-term orbital infrastructure scalability.</p>
-
-<div class="footer">Contact: info@hkspaceindustry.com<br>© 2026 HK SPACE INDUSTRY</div>
-`,
-
-ko: `
-<h1>HK SPACE INDUSTRY</h1>
-<p><strong>지구를 넘어, 미래를 설계합니다.</strong></p>
-
-<h2>회사 개요</h2>
-<p>HK SPACE INDUSTRY는 위성 시스템, 발사체 플랫폼, 궤도 인프라, 전략 방산 기술을 개발하는 차세대 우주항공·방위산업 기업입니다. 국가 및 글로벌 파트너를 위한 주권 기술을 구축합니다.</p>
-
-<h2>핵심 역량</h2>
-<p>• 위성 제작 및 운용<br>
-• 재사용 발사 시스템<br>
-• 우주 방위·감시 기술<br>
-• 궤도 데이터 인프라<br>
-• AI 통합 항공우주 플랫폼</p>
-
-<h2>비전 2035</h2>
-<p>지상에서 궤도까지 연결되는 통합 우주 생태계를 구축하여 전략적 우위와 지속 가능한 성장 기반을 확보합니다.</p>
-
-<p><strong>투자 포인트</strong><br>
-고성장 우주산업 시장. 정부 연계 프로젝트. 장기 궤도 인프라 확장성.</p>
-
-<div class="footer">문의: info@hkspaceindustry.com<br>© 2026 HK SPACE INDUSTRY</div>
-`,
-
-zh: `
-<h1>HK SPACE INDUSTRY</h1>
-<p><strong>迈向太空，掌控未来。</strong></p>
-
-<h2>公司概述</h2>
-<p>HK SPACE INDUSTRY 是一家专注于卫星系统、运载火箭平台、轨道基础设施与战略防务技术的下一代航天企业。我们为政府及全球合作伙伴提供主权级核心技术。</p>
-
-<h2>核心能力</h2>
-<p>• 卫星制造与部署<br>
-• 可重复使用发射系统<br>
-• 太空防御与监测<br>
-• 轨道数据基础设施<br>
-• AI集成航天平台</p>
-
-<h2>2035战略愿景</h2>
-<p>构建从地面到轨道的综合太空生态系统，实现战略优势与长期商业扩展。</p>
-
-<p><strong>投资亮点</strong><br>
-高增长航天市场，政府项目支持，长期轨道基础设施扩展潜力。</p>
-
-<div class="footer">联系: info@hkspaceindustry.com<br>© 2026 HK SPACE INDUSTRY</div>
-`,
-
-ar: `
-<h1>HK SPACE INDUSTRY</h1>
-<p><strong>نصنع مستقبل ما بعد الأرض.</strong></p>
-
-<h2>نبذة عن الشركة</h2>
-<p>تُعد HK SPACE INDUSTRY شركة رائدة في تقنيات الفضاء والدفاع، متخصصة في أنظمة الأقمار الصناعية، منصات الإطلاق، البنية التحتية المدارية، والتقنيات الدفاعية الاستراتيجية.</p>
-
-<h2>القدرات الأساسية</h2>
-<p>• تصنيع وإطلاق الأقمار الصناعية<br>
-• أنظمة إطلاق قابلة لإعادة الاستخدام<br>
-• الدفاع والمراقبة الفضائية<br>
-• بنية تحتية للبيانات المدارية<br>
-• منصات فضائية مدمجة بالذكاء الاصطناعي</p>
-
-<h2>رؤية 2035</h2>
-<p>بناء نظام فضائي متكامل من الأرض إلى المدار لتحقيق الريادة الاستراتيجية والنمو المستدام.</p>
-
-<p><strong>فرصة استثمارية</strong><br>
-سوق فضائي سريع النمو، مشاريع حكومية، قابلية توسع طويلة الأمد.</p>
-
-<div class="footer">البريد: info@hkspaceindustry.com<br>© 2026 HK SPACE INDUSTRY</div>
-`
-};
-
-function setLang(lang){
-document.getElementById("content").innerHTML = translations[lang];
-if(lang === "ar"){
-document.body.dir = "rtl";
-} else {
-document.body.dir = "ltr";
-}
-}
-
-function autoDetect(){
-let userLang = navigator.language.substring(0,2);
-if(translations[userLang]){
-setLang(userLang);
-}else{
-setLang("en");
-}
-}
-
-autoDetect();
-
-</script>
-
+            setTimeout(() => {
+                slogan.innerText = content[lang].s;
+                target.innerText = content[lang].t;
+                slogan.style.opacity = 1;
+                target.style.opacity = 1;
+            }, 200);
+        }
+    </script>
 </body>
 </html>
