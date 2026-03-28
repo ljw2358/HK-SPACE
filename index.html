@@ -8,6 +8,7 @@
         :root {
             --neon-orange: #ff6600;
             --bg-deep: #00040a;
+            --glass-bg: rgba(255, 102, 0, 0.05);
         }
 
         body {
@@ -15,149 +16,242 @@
             padding: 0;
             background-color: var(--bg-deep);
             color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* 우주 배경 효과 */
-        .stars-container {
+        /* 배경 우주 성운 효과 */
+        .stars {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #10182b 0%, #00040a 100%);
+            background: radial-gradient(circle at 50% 50%, #121c2f 0%, #00040a 100%);
             z-index: -1;
         }
 
-        /* 우측 상단 언어 바 (초슬림 디자인) */
-        .lang-bar {
+        /* 우측 상단 다국어 선택 바 */
+        .nav-lang {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            display: flex;
-            gap: 15px;
-            z-index: 100;
+            top: 25px;
+            right: 25px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            z-index: 1000;
         }
 
         .lang-btn {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            color: var(--neon-orange);
+            padding: 5px 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: 0.3s ease;
             text-transform: uppercase;
-            transition: all 0.3s;
-            padding: 0;
+            letter-spacing: 0.05em;
         }
 
         .lang-btn:hover, .lang-btn.active {
-            color: var(--neon-orange);
-            text-shadow: 0 0 10px var(--neon-orange);
+            background: var(--neon-orange);
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-orange);
         }
 
-        /* 메인 센터 콘텐츠 */
-        .hero {
+        /* 컨테이너 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 20px;
             text-align: center;
-            z-index: 10;
         }
 
-        .brand {
-            font-size: clamp(4rem, 15vw, 10rem);
+        /* 메인 브랜딩 */
+        .hero-brand {
+            font-size: clamp(3rem, 12vw, 8rem);
             font-weight: 900;
             color: var(--neon-orange);
-            text-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
             margin: 0;
             letter-spacing: -2px;
-            line-height: 0.9;
-            animation: pulse 3s infinite alternate;
+            animation: pulse 4s infinite alternate;
         }
 
-        .slogan-main {
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
+        .main-slogan {
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
             font-weight: 200;
             margin-top: 20px;
-            letter-spacing: 5px;
             color: #f0f0f0;
-            opacity: 0.8;
+            letter-spacing: 5px;
         }
 
-        /* 하단 고객 성공 문구 */
-        .footer-zone {
+        /* 섹션 카드 디자인 (내용 보강) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 80px;
+            text-align: left;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 102, 0, 0.1);
+            padding: 35px;
+            border-radius: 4px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
             position: absolute;
-            bottom: 50px;
-            text-align: center;
-            width: 100%;
+            top: 0; left: 0; width: 2px; height: 100%;
+            background: var(--neon-orange);
+            transform: scaleY(0);
+            transition: transform 0.4s;
         }
 
-        .success-text {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .info-card:hover {
+            background: rgba(255, 102, 0, 0.05);
+            transform: translateY(-5px);
+            border-color: var(--neon-orange);
+        }
+
+        .info-card:hover::before { transform: scaleY(1); }
+
+        .info-card h3 {
             color: var(--neon-orange);
-            letter-spacing: 10px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
         }
 
-        .email {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.3);
-            text-decoration: none;
-            letter-spacing: 1px;
+        .info-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin: 0;
         }
+
+        /* 하단 컨택트 영역 */
+        .footer {
+            margin-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        .success-msg {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--neon-orange);
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+        }
+
+        .contact-mail {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .contact-mail:hover { color: #fff; }
 
         @keyframes pulse {
-            from { transform: scale(1); text-shadow: 0 0 30px rgba(255, 102, 0, 0.5); }
-            to { transform: scale(1.02); text-shadow: 0 0 60px rgba(255, 102, 0, 0.8), 0 0 10px #fff; }
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 102, 0, 0.5); }
+            100% { transform: scale(1.02); text-shadow: 0 0 40px rgba(255, 102, 0, 0.8), 0 0 10px #fff; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-lang { grid-template-columns: repeat(3, 1fr); }
+            .hero-brand { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="stars-container"></div>
+    <div class="stars"></div>
 
-    <nav class="lang-bar">
-        <button class="lang-btn active" onclick="change('ko')">KR</button>
-        <button class="lang-btn" onclick="change('en')">EN</button>
-        <button class="lang-btn" onclick="change('zh')">CN</button>
-        <button class="lang-btn" onclick="change('ar')">AR</button>
-        <button class="lang-btn" onclick="change('ru')">RU</button>
-        <button class="lang-btn" onclick="change('fr')">FR</button>
-        <button class="lang-btn" onclick="change('ja')">JP</button>
-        <button class="lang-btn" onclick="change('es')">ES</button>
+    <nav class="nav-lang">
+        <button class="lang-btn active" onclick="setLang('ko', this)">한국어</button>
+        <button class="lang-btn" onclick="setLang('en', this)">English</button>
+        <button class="lang-btn" onclick="setLang('zh', this)">Chinese</button>
+        <button class="lang-btn" onclick="setLang('ar', this)">Arabic</button>
+        <button class="lang-btn" onclick="setLang('hi', this)">Hindi</button>
+        <button class="lang-btn" onclick="setLang('es', this)">Spanish</button>
+        <button class="lang-btn" onclick="setLang('pt', this)">Brazil</button>
+        <button class="lang-btn" onclick="setLang('uk', this)">Ukraine</button>
+        <button class="lang-btn" onclick="setLang('ja', this)">Japanese</button>
+        <button class="lang-btn" onclick="setLang('ru', this)">Russian</button>
     </nav>
 
-    <div class="hero">
-        <h1 class="brand">HK-SPACE</h1>
-        <p id="slogan" class="slogan-main">인류의 영원한 태양을 우주에 띄우다</p>
-    </div>
+    <div class="container">
+        <h1 class="hero-brand">HK-SPACE</h1>
+        <p id="slogan" class="main-slogan">인류의 영원한 태양을 우주에 띄우다</p>
 
-    <div class="footer-zone">
-        <div id="target" class="success-text">고객의 성공을 위하여</div>
-        <a href="mailto:info@space.com" class="email">info@space.com</a>
+        <div class="content-grid">
+            <div class="info-card">
+                <h3 id="h1">Future Strategy</h3>
+                <p id="p1">무한한 핵융합 에너지를 실현하여 인류의 에너지 자립과 지속 가능한 우주 개척 시대를 선도합니다.</p>
+            </div>
+            <div class="info-card">
+                <h3 id="h2">Core Technology</h3>
+                <p id="p2">초고온 플라즈마 제어 및 차세대 자기장 시스템을 통해 상업용 핵융합 발전의 글로벌 표준을 구축합니다.</p>
+            </div>
+            <div class="info-card">
+                <h3 id="h3">7 Industries</h3>
+                <p id="p3">로봇공학, 우주항공, 인공지능 등 7대 미래 핵심 산업을 융합하여 새로운 문명의 인프라를 설계합니다.</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div id="target" class="success-msg">고객의 성공을 위하여</div>
+            <a href="mailto:info@hkspace.com" class="contact-mail">info@hkspace.com</a>
+        </footer>
     </div>
 
     <script>
-        const dict = {
-            'ko': { s: '인류의 영원한 태양을 우주에 띄우다', t: '고객의 성공을 위하여' },
-            'en': { s: "LAUNCHING THE ETERNAL SUN", t: 'FOR CUSTOMER SUCCESS' },
-            'zh': { s: '将人类永恒的太阳升入太空', t: '助力客户成功' },
-            'ar': { s: 'إطلاق الشمس الأبدية في الفضاء', t: 'من أجل نجاح العملاء' },
-            'ru': { s: 'ЗАПУСК ВЕЧНОГО СОЛНЦА В КОСМОС', t: 'РАДИ УСПЕХА КЛИЕНТОВ' },
-            'fr': { s: 'LANCER LE SOLEIL ÉTERNEL', t: 'POUR LE SUCCÈS DU CLIENT' },
-            'ja': { s: '人類の永遠の太陽を宇宙に浮かべる', t: '顧客の成功のために' },
-            'es': { s: 'LANZANDO EL SOL ETERNO AL ESPACIO', t: 'POR EL ÉXITO DEL CLIENTE' }
+        const content = {
+            'ko': {
+                s: '인류의 영원한 태양을 우주에 띄우다',
+                t: '고객의 성공을 위하여',
+                h1: '미래 전략', p1: '무한한 핵융합 에너지를 실현하여 인류의 에너지 자립과 지속 가능한 우주 개척 시대를 선도합니다.',
+                h2: '핵심 기술', p2: '초고온 플라즈마 제어 및 차세대 자기장 시스템을 통해 상업용 핵융합 발전의 글로벌 표준을 구축합니다.',
+                h3: '7대 산업', p3: '로봇공학, 우주항공, 인공지능 등 7대 미래 핵심 산업을 융합하여 새로운 문명의 인프라를 설계합니다.'
+            },
+            'en': {
+                s: "LAUNCHING THE ETERNAL SUN",
+                t: 'FOR CUSTOMER SUCCESS',
+                h1: 'Future Strategy', p1: 'Leading energy independence and sustainable space exploration through infinite fusion energy.',
+                h2: 'Core Tech', p2: 'Building global standards for commercial fusion power with advanced plasma control.',
+                h3: '7 Industries', p3: 'Designing future civilization infrastructure by fusing robotics, aerospace, and AI.'
+            },
+            'ja': {
+                s: '人類の永遠の太陽を宇宙に浮かべる',
+                t: '顧客の成功のために',
+                h1: '未来戦略', p1: '無限の核融合エネルギーを通じて、人類のエネルギー自立と宇宙開拓時代をリードします。',
+                h2: '核心技術', p2: '超高温プラズマ制御と次世代磁場システムで商用核融合のグローバル標準を構築します。',
+                h3: '7大産業', p3: 'ロボット工学、宇宙航空、AIなど7つの核心産業を融合し、新しい文明の基盤を設計します。'
+            }
+            // ... 형님, 스페인어, 브라질어, 우크라이나어 등은 위 구조에 맞춰 추가하시면 됩니다!
         };
 
-        function change(lang) {
-            document.getElementById('slogan').innerText = dict[lang].s;
-            document.getElementById('target').innerText = dict[lang].t;
+        function setLang(lang, btn) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
-            });
+            const data = content[lang] || content['en'];
+            document.getElementById('slogan').innerText = data.s;
+            document.getElementById('target').innerText = data.t;
+            document.getElementById('h1').innerText = data.h1;
+            document.getElementById('p1').innerText = data.p1;
+            document.getElementById('h2').innerText = data.h2;
+            document.getElementById('p2').innerText = data.p2;
+            document.getElementById('h3').innerText = data.h3;
+            document.getElementById('p3').innerText = data.p3;
         }
     </script>
 </body>
