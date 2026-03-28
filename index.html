@@ -3,56 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK-SPACE INDUSTRY | 글로벌 우주 산업의 리더</title>
+    <title>HK-SPACE INDUSTRY | 우주 산업의 미래를 선도하다</title>
     <style>
         :root {
             --neon-orange: #ff6600;
-            --deep-dark: #000308;
-            --glass: rgba(255, 102, 0, 0.1);
+            --bg-deep: #00040a;
+            --glass-bg: rgba(255, 102, 0, 0.05);
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--deep-dark);
+            background-color: var(--bg-deep);
             color: #fff;
             font-family: 'Pretendard', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
         }
 
-        /* 우주 배경 애니메이션 */
-        .space-bg {
+        /* 우주 배경 레이어 */
+        .stars-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #0d1b2a 0%, #000308 100%);
+            background: radial-gradient(circle at center, #0d1b2a 0%, #00040a 100%);
             z-index: -1;
         }
 
-        /* 오른쪽 상단 언어 선택 네모 박스 */
-        .lang-container {
+        /* 오른쪽 상단 언어 선택 (네모난 칸, 드롭다운) */
+        .lang-nav {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--neon-orange);
-            padding: 10px;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            top: 25px;
+            right: 25px;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+        }
+
+        .lang-trigger {
+            background: none;
+            border: 1px solid var(--neon-orange);
+            color: var(--neon-orange);
+            padding: 6px 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .lang-trigger:hover, .lang-trigger.active {
+            background: var(--neon-orange);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-orange);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            padding: 10px;
+            width: 250px;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .lang-btn {
-            background: var(--glass);
-            border: 1px solid rgba(255, 102, 0, 0.3);
-            color: var(--neon-orange);
-            padding: 4px 8px;
-            font-size: 0.65rem;
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 102, 0, 0.1);
+            color: rgba(255, 102, 0, 0.8);
+            padding: 5px 10px;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: 0.3s;
-            text-align: center;
+            text-align: left;
         }
 
         .lang-btn:hover, .lang-btn.active {
@@ -60,21 +87,22 @@
             color: #fff;
         }
 
-        /* 메인 콘텐츠 */
+        /* 메인 콘텐츠 컨테이너 */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 150px 20px 80px;
+            padding: 120px 20px 80px;
             text-align: center;
         }
 
         .brand-logo {
-            font-size: clamp(2.5rem, 10vw, 6rem);
+            font-size: clamp(3rem, 12vw, 8rem);
             font-weight: 900;
             color: var(--neon-orange);
             text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
             margin: 0;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            animation: pulse 4s infinite alternate;
         }
 
         .industry-tag {
@@ -82,30 +110,31 @@
             letter-spacing: 8px;
             color: #aaa;
             margin-top: -10px;
-            margin-bottom: 40px;
             text-transform: uppercase;
+            margin-bottom: 50px;
         }
 
         .main-slogan {
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
-            font-weight: 300;
+            font-size: clamp(1.2rem, 3vw, 2.3rem);
+            font-weight: 200;
             color: #f0f0f0;
-            margin-bottom: 80px;
+            margin-bottom: 70px;
+            letter-spacing: 5px;
         }
 
-        /* 내용 충실히 (그리드 레이아웃) */
+        /* 우주 산업 핵심 섹션 (내용 보강) */
         .grid-box {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
             text-align: left;
         }
 
         .info-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 4px solid var(--neon-orange);
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--neon-orange);
             padding: 30px;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         .info-card:hover {
@@ -116,7 +145,7 @@
         .info-card h3 {
             color: var(--neon-orange);
             margin-top: 0;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .info-card p {
@@ -124,105 +153,133 @@
             margin-bottom: 0;
         }
 
-        /* 푸터 */
+        /* 하단 푸터 */
         .footer {
             margin-top: 100px;
+            padding-bottom: 50px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 40px 0;
+            padding-top: 40px;
         }
 
-        .success-msg {
+        .customer-target {
             font-size: 1.8rem;
             font-weight: 800;
             color: var(--neon-orange);
-            letter-spacing: 5px;
-            margin-bottom: 20px;
+            letter-spacing: 8px;
+            margin-bottom: 25px;
         }
 
-        .contact-mail {
-            color: #777;
+        .mail-link {
+            color: rgba(255,255,255,0.3);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .mail-link:hover { color: #fff; }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 20px rgba(255, 102, 0, 0.5); }
+            to { text-shadow: 0 0 40px rgba(255, 102, 0, 0.8), 0 0 10px #fff; }
         }
 
         @media (max-width: 768px) {
-            .lang-container { grid-template-columns: repeat(3, 1fr); }
+            .lang-dropdown { width: 100%; left: 0; right: 0; grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="space-bg"></div>
+    <div class="stars-bg"></div>
 
-    <div class="lang-container">
-        <button class="lang-btn active" onclick="update('ko', this)">한국어</button>
-        <button class="lang-btn" onclick="update('en', this)">EN</button>
-        <button class="lang-btn" onclick="update('zh', this)">CN</button>
-        <button class="lang-btn" onclick="update('ar', this)">AR</button>
-        <button class="lang-btn" onclick="update('hi', this)">HI</button>
-        <button class="lang-btn" onclick="update('es', this)">ES</button>
-        <button class="lang-btn" onclick="update('pt', this)">BR</button>
-        <button class="lang-btn" onclick="update('uk', this)">UA</button>
-        <button class="lang-btn" onclick="update('ja', this)">JP</button>
-        <button class="lang-btn" onclick="update('ru', this)">RU</button>
-    </div>
+    <nav class="lang-nav">
+        <button id="lang-trigger" class="lang-trigger" onclick="toggleLang()">KOREAN <span style="font-size: 0.6rem">▼</span></button>
+        <div id="lang-dropdown" class="lang-dropdown">
+            <button class="lang-btn active" onclick="changeLang('ko', this)">한국어</button>
+            <button class="lang-btn" onclick="changeLang('en', this)">English</button>
+            <button class="lang-btn" onclick="changeLang('zh', this)">Chinese</button>
+            <button class="lang-btn" onclick="changeLang('ar', this)">Arabic</button>
+            <button class="lang-btn" onclick="changeLang('hi', this)">Hindi</button>
+            <button class="lang-btn" onclick="changeLang('es', this)">Spanish</button>
+            <button class="lang-btn" onclick="changeLang('pt', this)">Brazil</button>
+            <button class="lang-btn" onclick="changeLang('uk', this)">Ukraine</button>
+            <button class="lang-btn" onclick="changeLang('ja', this)">Japanese</button>
+            <button class="lang-btn" onclick="changeLang('ru', this)">Russian</button>
+        </div>
+    </nav>
 
     <div class="container">
         <h1 class="brand-logo">HK-SPACE</h1>
         <div class="industry-tag">INDUSTRY</div>
-        <p id="slogan" class="main-slogan">인류의 영원한 태양을 우주에 띄우다</p>
+        <p id="slogan" class="main-slogan">우주 산업의 새로운 태양을 띄우다</p>
 
         <div class="grid-box">
             <div class="info-card">
-                <h3 id="h1">우주 핵융합 에너지</h3>
-                <p id="p1">지구와 우주 어디서나 사용 가능한 무한 에너지를 실현하여 차세대 에너지 주권을 확보합니다.</p>
+                <h3 id="h1">로봇공학 및 인공태양</h3>
+                <p id="p1">우주 자원 탐사와 인프라 구축을 위한 첨단 로봇 기술을 개발하고, 인공태양 에너지 시스템을 우주에 실현합니다.</p>
             </div>
             <div class="info-card">
-                <h3 id="h2">미래 산업 융합</h3>
-                <p id="p2">로봇, AI, 항공우주 기술을 통합하여 달과 화성 개척을 위한 핵심 인프라를 구축합니다.</p>
+                <h3 id="h2">우주항공 기술</h3>
+                <p id="p2">로켓, 인공위성 등 차세대 우주항공 기술을 통합하여 달과 화성 개척을 위한 핵심 기반을 마련합니다.</p>
             </div>
             <div class="info-card">
-                <h3 id="h3">지속 가능한 비전</h3>
-                <p id="p3">탈탄소 에너지 혁명을 통해 지구를 보호하고 인류 문명의 활동 영역을 우주로 확장합니다.</p>
+                <h3 id="h3">7대 산업 융합</h3>
+                <p id="p3">AI, 로봇, 우주항공, 인공태양 등 7대 핵심 산업의 융합을 통해 지속 가능한 우주 문명의 기틀을 다집니다.</p>
             </div>
         </div>
 
         <footer class="footer">
-            <div id="target" class="success-msg">고객의 성공을 위하여</div>
-            <a href="mailto:info@hkspace.com" class="contact-mail">info@hkspace.com</a>
+            <div id="target" class="customer-target">고객의 성공을 위하여</div>
+            <a href="mailto:info@hkspace.com" class="mail-link">info@hkspace.com</a>
         </footer>
     </div>
 
     <script>
         const content = {
             'ko': {
-                s: '인류의 영원한 태양을 우주에 띄우다', t: '고객의 성공을 위하여',
-                h1: '우주 핵융합 에너지', p1: '지구와 우주 어디서나 사용 가능한 무한 에너지를 실현하여 차세대 에너지 주권을 확보합니다.',
-                h2: '미래 산업 융합', p2: '로봇, AI, 항공우주 기술을 통합하여 달과 화성 개척을 위한 핵심 인프라를 구축합니다.',
-                h3: '지속 가능한 비전', p3: '탈탄소 에너지 혁명을 통해 지구를 보호하고 인류 문명의 활동 영역을 우주로 확장합니다.'
+                s: '우주 산업의 새로운 태양을 띄우다', t: '고객의 성공을 위하여',
+                h1: '로봇공학 및 인공태양', p1: '우주 자원 탐사와 인프라 구축을 위한 첨단 로봇 기술을 개발하고, 인공태양 에너지 시스템을 우주에 실현합니다.',
+                h2: '우주항공 기술', p2: '로켓, 인공위성 등 차세대 우주항공 기술을 통합하여 달과 화성 개척을 위한 핵심 기반을 마련합니다.',
+                h3: '7대 산업 융합', p3: 'AI, 로봇, 우주항공, 인공태양 등 7대 핵심 산업의 융합을 통해 지속 가능한 우주 문명의 기틀을 다집니다.'
             },
             'en': {
-                s: "LAUNCHING THE ETERNAL SUN", t: 'FOR CUSTOMER SUCCESS',
-                h1: 'Space Fusion Energy', p1: 'Realizing infinite energy available anywhere in Earth and space for next-gen sovereignty.',
-                h2: 'Future Convergence', p2: 'Integrating robotics, AI, and aerospace to build key infrastructure for lunar and Mars exploration.',
-                h3: 'Sustainable Vision', p3: 'Protecting Earth through a decarbonized energy revolution and expanding humanity into space.'
+                s: "LAUNCHING THE NEW SUN OF SPACE INDUSTRY", t: 'FOR CUSTOMER SUCCESS',
+                h1: 'Robotics & Artificial Sun', p1: 'Developing advanced robotics for space exploration and infrastructure, realizing artificial sun energy systems in space.',
+                h2: 'Aerospace Technology', p2: 'Integrating rocket and satellite technologies to establish key foundations for lunar and Mars exploration.',
+                h3: '7 Industries Convergence', p3: 'Laying the foundation for sustainable space civilization through the convergence of AI, robotics, aerospace, and energy.'
+            },
+            'ja': {
+                s: '宇宙産業の新しい太陽を浮かべる', t: '顧客の成功のために',
+                h1: 'ロボット工学と人工太陽', p1: '宇宙資源探査とインフラ構築のための先進ロボット技術を開発し、人工太陽エネルギーシステムを宇宙で実現します。',
+                h2: '宇宙航空技術', p2: 'ロケット、人工衛星など次世代宇宙航空技術を統合し、月と火星開拓のための主要基盤を用意します。',
+                h3: '7大産業融合', p3: 'AI、ロボット、宇宙航空、人工太陽など7つの核心産業の融合を通じて、持続可能な宇宙文明の基盤を固めます。'
             }
-            // ... 형님, 요청하신 나머지 언어도 이 구조에 맞춰 추가 가능합니다!
+            // ... 나머지 언어들도 동일 구조로 확장 가능
         };
 
-        function update(lang, btn) {
+        function toggleLang() {
+            const dropdown = document.getElementById('lang-dropdown');
+            const trigger = document.getElementById('lang-trigger');
+            dropdown.style.display = (dropdown.style.display === 'grid' ? 'none' : 'grid');
+            trigger.classList.toggle('active');
+        }
+
+        function changeLang(lang, btn) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            const d = content[lang] || content['en'];
-            document.getElementById('slogan').innerText = d.s;
-            document.getElementById('target').innerText = d.t;
-            document.getElementById('h1').innerText = d.h1;
-            document.getElementById('p1').innerText = d.p1;
-            document.getElementById('h2').innerText = d.h2;
-            document.getElementById('p2').innerText = d.p2;
-            document.getElementById('h3').innerText = d.h3;
-            document.getElementById('p3').innerText = d.p3;
+            const data = content[lang] || content['en'];
+            document.getElementById('slogan').innerText = data.s;
+            document.getElementById('target').innerText = data.t;
+            document.getElementById('h1').innerText = data.h1;
+            document.getElementById('p1').innerText = data.p1;
+            document.getElementById('h2').innerText = data.h2;
+            document.getElementById('p2').innerText = data.p2;
+            document.getElementById('h3').innerText = data.h3;
+            document.getElementById('p3').innerText = data.p3;
+            
+            // 드롭다운 닫기
+            toggleLang();
         }
     </script>
 </body>
