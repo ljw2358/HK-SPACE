@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK-SPACE-FUSION</title>
+    <title>HK-SPACE | 인류의 새로운 태양</title>
     <style>
         :root {
             --neon-orange: #ff6600;
-            --deep-space: #000210;
+            --bg-deep: #00040a;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--deep-space);
+            background-color: var(--bg-deep);
             color: #fff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -23,172 +23,141 @@
             height: 100vh;
         }
 
-        /* 배경 은하수 효과 */
-        .stars {
+        /* 우주 배경 효과 */
+        .stars-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #10182b 0%, #00040a 100%);
             z-index: -1;
-            animation: panStars 120s linear infinite;
         }
 
-        /* 우측 상단 언어 선택 영역 (세련된 정리) */
-        .language-nav {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            max-width: 700px;
+        /* 우측 상단 언어 바 (초슬림 디자인) */
+        .lang-bar {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
             z-index: 100;
         }
 
         .lang-btn {
-            background: rgba(255, 102, 0, 0.05);
-            border: 1px solid rgba(255, 102, 0, 0.3);
-            color: rgba(255, 102, 0, 0.8);
-            padding: 5px 10px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 0.7rem;
+            letter-spacing: 1px;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(255, 102, 0, 0.2);
+            transition: all 0.3s;
+            padding: 0;
         }
 
         .lang-btn:hover, .lang-btn.active {
-            background: var(--neon-orange);
-            color: white;
-            border-color: var(--neon-orange);
-            box-shadow: 0 0 15px var(--neon-orange);
-            font-weight: bold;
+            color: var(--neon-orange);
+            text-shadow: 0 0 10px var(--neon-orange);
         }
 
-        /* 메인 홀로그램 콘텐츠 */
-        .main-container {
+        /* 메인 센터 콘텐츠 */
+        .hero {
             text-align: center;
-            perspective: 1000px;
+            z-index: 10;
         }
 
-        .brand-name {
-            font-size: clamp(3rem, 10vw, 7rem);
+        .brand {
+            font-size: clamp(4rem, 15vw, 10rem);
             font-weight: 900;
             color: var(--neon-orange);
-            text-shadow: 0 0 15px var(--neon-orange), 0 0 30px var(--neon-orange);
-            margin-bottom: 25px;
-            letter-spacing: 12px;
-            animation: pulse 4s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            margin: 0;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            animation: pulse 3s infinite alternate;
         }
 
-        .slogan-box {
-            min-height: 120px;
-            margin-bottom: 40px;
+        .slogan-main {
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            font-weight: 200;
+            margin-top: 20px;
+            letter-spacing: 5px;
+            color: #f0f0f0;
+            opacity: 0.8;
         }
 
-        .slogan {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 300;
-            opacity: 0.9;
-            color: #e0e0e0;
-            margin-bottom: 15px;
-        }
-
-        .customer-target {
-            font-size: clamp(1.1rem, 3vw, 1.8rem);
-            letter-spacing: 3px;
-            color: var(--neon-orange);
-            font-weight: bold;
-        }
-
-        /* 하단 이메일 정보 */
-        .contact {
+        /* 하단 고객 성공 문구 */
+        .footer-zone {
             position: absolute;
-            bottom: 30px;
-            width: 100%;
+            bottom: 50px;
             text-align: center;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.4);
+            width: 100%;
         }
 
-        .contact a {
+        .success-text {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--neon-orange);
+            letter-spacing: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .email {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
             text-decoration: none;
+            letter-spacing: 1px;
         }
 
-        /* 애니메이션 */
         @keyframes pulse {
-            0% { text-shadow: 0 0 15px var(--neon-orange), 0 0 30px var(--neon-orange); }
-            100% { text-shadow: 0 0 25px var(--neon-orange), 0 0 50px var(--neon-orange); }
-        }
-
-        @keyframes panStars {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-500px); }
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            from { transform: scale(1); text-shadow: 0 0 30px rgba(255, 102, 0, 0.5); }
+            to { transform: scale(1.02); text-shadow: 0 0 60px rgba(255, 102, 0, 0.8), 0 0 10px #fff; }
         }
     </style>
 </head>
 <body>
 
-    <div class="stars"></div>
+    <div class="stars-container"></div>
 
-    <nav class="language-nav">
-        <button class="lang-btn active" onclick="changeLang('ko', this)">한국어</button>
-        <button class="lang-btn" onclick="changeLang('en', this)">English</button>
-        <button class="lang-btn" onclick="changeLang('zh', this)">Chinese</button>
-        <button class="lang-btn" onclick="changeLang('ar', this)">Arabic</button>
-        <button class="lang-btn" onclick="changeLang('hi', this)">Hindi</button>
-        <button class="lang-btn" onclick="changeLang('ru', this)">Russian</button>
-        <button class="lang-btn" onclick="changeLang('fr', this)">French</button>
-        <button class="lang-btn" onclick="changeLang('uk', this)">Ukraine</button>
-        <button class="lang-btn" onclick="changeLang('ja', this)">Japanese</button>
-        <button class="lang-btn" onclick="changeLang('es', this)">Spanish</button>
+    <nav class="lang-bar">
+        <button class="lang-btn active" onclick="change('ko')">KR</button>
+        <button class="lang-btn" onclick="change('en')">EN</button>
+        <button class="lang-btn" onclick="change('zh')">CN</button>
+        <button class="lang-btn" onclick="change('ar')">AR</button>
+        <button class="lang-btn" onclick="change('ru')">RU</button>
+        <button class="lang-btn" onclick="change('fr')">FR</button>
+        <button class="lang-btn" onclick="change('ja')">JP</button>
+        <button class="lang-btn" onclick="change('es')">ES</button>
     </nav>
 
-    <div class="main-container">
-        <h1 class="brand-name">HK-SPACE-FUSION</h1>
-        <div class="slogan-box">
-            <div id="main-slogan" class="slogan">인류의 영원한 태양을 우주에 띄우다</div>
-            <div id="sub-slogan" class="customer-target">고객의 성공을 위하여</div>
-        </div>
+    <div class="hero">
+        <h1 class="brand">HK-SPACE</h1>
+        <p id="slogan" class="slogan-main">인류의 영원한 태양을 우주에 띄우다</p>
     </div>
 
-    <div class="contact">
-        Contact: <a href="mailto:info@hkspace.com">info@hkspace.com</a>
+    <div class="footer-zone">
+        <div id="target" class="success-text">고객의 성공을 위하여</div>
+        <a href="mailto:info@space.com" class="email">info@space.com</a>
     </div>
 
     <script>
-        const translations = {
+        const dict = {
             'ko': { s: '인류의 영원한 태양을 우주에 띄우다', t: '고객의 성공을 위하여' },
-            'en': { s: "Launching Humanity's Eternal Sun into Space", t: 'For Customer Success' },
+            'en': { s: "LAUNCHING THE ETERNAL SUN", t: 'FOR CUSTOMER SUCCESS' },
             'zh': { s: '将人类永恒的太阳升入太空', t: '助力客户成功' },
-            'ar': { s: 'إطلاق شمس البشرية الأبدية في الفضاء', t: 'من أجل نجاح العملاء' },
-            'hi': { s: 'मानवता के शाश्वत सूर्य को अंतरिक्ष में प्रक्षेपित करना', t: 'ग्राहकों की सफलता के लिए' },
-            'ru': { s: 'Запуск вечного солнца человечества в космос', t: 'Ради успеха клиентов' },
-            'fr': { s: "Lancer le soleil éternel de l'humanité dans l'espace", t: 'Pour le succès du client' },
-            'uk': { s: 'Запуск вічного сонця людства в космос', t: 'Заради успіху клієнтів' },
-            'ja': { s: '人類의 永遠의 太陽을 宇宙에 띄우다', t: '顧客의 成功을 위하여' },
-            'es': { s: 'Lanzando el sol eterno de la humanidad al espacio', t: 'Por el éxito del cliente' }
+            'ar': { s: 'إطلاق الشمس الأبدية في الفضاء', t: 'من أجل نجاح العملاء' },
+            'ru': { s: 'ЗАПУСК ВЕЧНОГО СОЛНЦА В КОСМОС', t: 'РАДИ УСПЕХА КЛИЕНТОВ' },
+            'fr': { s: 'LANCER LE SOLEIL ÉTERNEL', t: 'POUR LE SUCCÈS DU CLIENT' },
+            'ja': { s: '人類の永遠の太陽を宇宙に浮かべる', t: '顧客の成功のために' },
+            'es': { s: 'LANZANDO EL SOL ETERNO AL ESPACIO', t: 'POR EL ÉXITO DEL CLIENTE' }
         };
 
-        function changeLang(lang, btn) {
-            // 버튼 활성화 표시
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            // 내용 업데이트 (부드러운 페이드 효과 추가)
-            const sloganBox = document.querySelector('.slogan-box');
-            sloganBox.style.animation = 'fadeIn 0.5s ease-out';
+        function change(lang) {
+            document.getElementById('slogan').innerText = dict[lang].s;
+            document.getElementById('target').innerText = dict[lang].t;
             
-            document.getElementById('main-slogan').innerText = translations[lang].s;
-            document.getElementById('sub-slogan').innerText = translations[lang].t;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+            });
         }
     </script>
 </body>
