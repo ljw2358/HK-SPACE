@@ -3,153 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK Group | Galactic Industry Pioneer</title>
+    <title>HK SPACE | Your Success in Universe</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');
-
-        :root { --main-blue: #4dafff; --space-dark: #050a10; }
+        :root { --main-blue: #4dafff; --space-dark: #020508; }
 
         body {
             margin: 0; padding: 0; background: var(--space-dark); color: white;
-            font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; line-height: 1.6;
+            font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden;
         }
 
-        /* 우주 배경 레이어 */
-        #universe {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1b2735 0%, #000 100%);
-            z-index: -1;
-        }
+        #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        /* 네비게이션 */
         nav {
-            position: fixed; top: 0; width: 100%; height: 70px;
+            position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(77, 175, 255, 0.2); z-index: 1000; box-sizing: border-box;
+            padding: 0 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(77, 175, 255, 0.3); z-index: 1000; box-sizing: border-box;
         }
-        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 4px; color: var(--main-blue); }
-        select { background: transparent; color: white; border: 1px solid var(--main-blue); padding: 5px 10px; border-radius: 20px; cursor: pointer; }
+        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 5px; color: var(--main-blue); }
+        
+        /* 언어 선택 네모 박스 */
+        .lang-box { border: 1px solid var(--main-blue); background: rgba(77, 175, 255, 0.1); border-radius: 4px; }
+        select { background: transparent; color: white; border: none; padding: 5px 10px; cursor: pointer; outline: none; }
 
-        /* 연결고리 서사 섹션 */
-        section { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        section { max-width: 1100px; margin: 0 auto; padding: 50px 20px; text-align: center; }
 
-        .hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: 4.5rem; margin: 0; font-weight: 100; letter-spacing: -2px; }
-        .hero .highlight { font-weight: 700; color: var(--main-blue); text-shadow: 0 0 30px rgba(77,175,255,0.5); }
-        .hero p { font-size: 1.3rem; margin-top: 20px; color: #ccc; letter-spacing: 5px; }
+        .hero { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; padding-top: 100px; }
+        .hero h1 { font-size: 5rem; margin: 0; line-height: 1; }
+        .hero p { font-size: 1.5rem; margin-top: 15px; color: var(--main-blue); letter-spacing: 3px; font-weight: 100; }
 
-        /* 산업과 우주를 잇는 '브릿지' 문구 */
-        .bridge {
-            padding: 80px 20px; background: rgba(255,255,255,0.03);
-            border-radius: 50px; border: 1px solid rgba(77,175,255,0.1);
-            margin: 40px auto; position: relative;
+        /* 고객 성공의 이유 (Core Value) */
+        .success-story {
+            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 30px;
+            border-left: 5px solid var(--main-blue); margin: 30px 0; text-align: left;
         }
-        .bridge::before {
-            content: ''; position: absolute; top: -40px; left: 50%; width: 2px; height: 40px;
-            background: linear-gradient(to bottom, transparent, var(--main-blue));
-        }
+        .success-story h2 { font-size: 2rem; color: var(--main-blue); margin-top: 0; }
+        .success-story p { font-size: 1.1rem; line-height: 1.8; color: #ddd; }
 
-        /* 7대 핵심 산업 그리드 - 우주 기지 느낌 */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; margin-top: 40px;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .card {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
-            padding: 35px; border-radius: 5px; transition: 0.4s; position: relative; overflow: hidden;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px; border-radius: 10px; transition: 0.3s;
         }
-        .card:hover {
-            border-color: var(--main-blue); background: rgba(77,175,255,0.05);
-            transform: scale(1.02);
-        }
-        .card h3 { font-size: 1.4rem; color: var(--main-blue); margin-bottom: 15px; }
-        .card p { font-size: 0.95rem; color: #aaa; }
+        .card:hover { border-color: var(--main-blue); transform: translateY(-5px); }
+        .card h3 { color: var(--main-blue); margin-bottom: 10px; }
 
-        footer { padding: 60px; opacity: 0.3; font-size: 0.8rem; letter-spacing: 2px; }
+        footer { padding: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 50px; }
+        .contact { color: var(--main-blue); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div id="universe"></div>
+<canvas id="stars-canvas"></canvas>
 
 <nav>
-    <div class="logo">HK GROUP</div>
-    <select id="langSelect" onchange="changeLanguage()">
-        <option value="ko">KOREAN</option>
-        <option value="en">ENGLISH</option>
-        <option value="zh">CHINESE</option>
-        <option value="ar">ARABIC</option>
-        <option value="hi">HINDI</option>
-        <option value="es">SPANISH</option>
-        <option value="pt">PORTUGUESE</option>
-        <option value="uk">UKRAINIAN</option>
-        <option value="ja">JAPANESE</option>
-        <option value="ru">RUSSIAN</option>
-        <option value="vi">VIETNAMESE</option>
-        <option value="th">THAI</option>
-        <option value="id">INDONESIAN</option>
-    </select>
+    <div class="logo">HK SPACE</div>
+    <div class="lang-box">
+        <select id="langSelect" onchange="translatePage()">
+            <option value="ko">KOREAN</option>
+            <option value="en">ENGLISH</option>
+            <option value="zh">CHINESE</option>
+            <option value="ar">ARABIC</option>
+            <option value="hi">HINDI</option>
+            <option value="es">SPANISH</option>
+            <option value="pt">PORTUGUESE</option>
+            <option value="uk">UKRAINIAN</option>
+            <option value="ja">JAPANESE</option>
+            <option value="ru">RUSSIAN</option>
+            <option value="vi">VIETNAMESE</option>
+            <option value="th">THAI</option>
+            <option value="id">INDONESIAN</option>
+        </select>
+    </div>
 </nav>
 
 <section class="hero">
-    <h1 id="t1">UNIVERSE <span class="highlight">IS OUR FIELD</span></h1>
-    <p id="t2">지구의 자원을 넘어 우주 경제의 중심으로</p>
+    <h1 id="h-title">HK SPACE</h1>
+    <p id="h-sub">지구를 넘어, 당신의 성공을 우주로</p>
 </section>
 
-<section class="bridge">
-    <h2 id="t3">Beyond the Earth Economy</h2>
-    <p id="t4">HK 그룹은 지구 내에 머물던 산업 패러다임을 우주로 확장합니다.<br>
-    인공태양의 에너지를 우주 기지로 보내고, 휴머노이드 로봇이 소행성을 채굴하며,<br>
-    HK-WorldBank가 우주 무역의 기축 통화가 되는 미래를 설계합니다.</p>
+<section class="success-story">
+    <h2 id="s-title">Why HK SPACE?</h2>
+    <p id="s-desc">
+        지구의 자원은 한정되어 있지만, 우주의 기회는 무한합니다. <br>
+        HK SPACE는 독보적인 <b>인공태양 에너지</b>와 <b>지능형 로봇 기술</b>을 제공하여 <br>
+        고객의 비즈니스가 시공간의 제약을 벗어나 전 우주적 스케일로 성공하도록 돕습니다. <br>
+        우리가 개척하는 길은 곧 당신의 새로운 시장이 됩니다.
+    </p>
 </section>
 
-<section>
-    <div class="grid">
-        <div class="card">
-            <h3 id="i1">Humanoid Robotics</h3>
-            <p id="d1">우주 공간과 험지에서 인류를 대신해 건설과 탐사를 수행하는 지능형 로봇 시스템</p>
-        </div>
-        <div class="card">
-            <h3 id="i2">Nuclear Fusion</h3>
-            <p id="d2">심우주 탐사를 가능케 하는 무한 동력, 인공태양 기술의 소형화 및 에너지 전송</p>
-        </div>
-        <div class="card">
-            <h3 id="i3">HK-WorldBank</h3>
-            <p id="d3">국경을 넘어 행성 간 거래까지 지원하는 블록체인 기반 차세대 금융 플랫폼</p>
-        </div>
-        <div class="card">
-            <h3 id="i4">Quantum Bio</h3>
-            <p id="d4">장기간 우주 거주를 위한 인체 최적화 및 양자 단위의 생명 연장 프로젝트</p>
-        </div>
+<section class="grid">
+    <div class="card">
+        <h3 id="i1">Robotics</h3>
+        <p id="d1">고객의 생산성을 무한대로 확장하는 자율형 우주 로봇 시스템</p>
+    </div>
+    <div class="card">
+        <h3 id="i2">Energy</h3>
+        <p id="d2">비즈니스 중단 없는 24/7 무한 청정 에너지, 핵융합 기술</p>
+    </div>
+    <div class="card">
+        <h3 id="i3">Finance</h3>
+        <p id="d3">우주 무역과 자산 가치를 보전하는 HK-WorldBank 금융망</p>
     </div>
 </section>
 
-<footer>&copy; 2026 HK GROUP. THE FUTURE IS HERE.</footer>
+<footer>
+    <p id="f-text">비즈니스 문의 및 파트너십</p>
+    <a href="mailto:info@hkspace.com" class="contact">info@hkspace.com</a>
+    <p style="opacity: 0.3; margin-top: 20px;">&copy; 2026 HK SPACE. All Rights Reserved.</p>
+</footer>
 
 <script>
-    const dict = {
-        ko: ["UNIVERSE IS OUR FIELD", "지구의 자원을 넘어 우주 경제의 중심으로", "지구 경제를 넘어서", "HK 그룹은 지구 내에 머물던 산업 패러다임을 우주로 확장합니다. 인공태양의 에너지를 우주 기지로 보내고, 휴머노이드 로봇이 소행성을 채굴하며, HK-WorldBank가 우주 무역의 기축 통화가 되는 미래를 설계합니다.", "휴머노이드 로봇", "우주 공간과 험지에서 인류를 대신해 건설과 탐사를 수행하는 지능형 로봇 시스템", "핵융합(인공태양)", "심우주 탐사를 가능케 하는 무한 동력, 인공태양 기술의 소형화 및 에너지 전송", "HK-월드뱅크", "국경을 넘어 행성 간 거래까지 지원하는 블록체인 기반 차세대 금융 플랫폼", "퀀텀 바이오", "장기간 우주 거주를 위한 인체 최적화 및 양자 단위의 생명 연장 프로젝트"],
-        en: ["UNIVERSE IS OUR FIELD", "Beyond Earth, To the Center of Space Economy", "Beyond the Earth Economy", "HK Group expands the industrial paradigm from Earth to space. We design a future where fusion energy powers space stations, humanoids mine asteroids, and HK-WorldBank becomes the key currency for interstellar trade.", "Humanoid Robotics", "Intelligent robot systems for construction and exploration in space and harsh environments.", "Nuclear Fusion", "Infinite power for deep space exploration, including miniaturization of Artificial Sun technology.", "HK-WorldBank", "Next-gen blockchain financial platform supporting cross-border and interstellar trade.", "Quantum Bio", "Optimization for long-term space habitation and life extension at the quantum level."],
-        // ... (나머지 11개국 언어도 동일하게 이 리스트 구조로 추가하시면 됩니다)
+    // 13개국 언어 완벽 데이터셋
+    const translations = {
+        ko: { h_sub: "지구를 넘어, 당신의 성공을 우주로", s_title: "왜 HK SPACE인가?", s_desc: "지구의 자원은 한정되어 있지만, 우주의 기회는 무한합니다. HK SPACE는 독보적인 인공태양 에너지와 지능형 로봇 기술을 제공하여 고객의 비즈니스가 시공간의 제약을 벗어나 전 우주적 스케일로 성공하도록 돕습니다. 우리가 개척하는 길은 곧 당신의 새로운 시장이 됩니다.", i1: "로보틱스", d1: "고객의 생산성을 무한대로 확장하는 자율형 우주 로봇 시스템", i2: "에너지", d2: "비즈니스 중단 없는 24/7 무한 청정 에너지, 핵융합 기술", i3: "금융", d3: "우주 무역과 자산 가치를 보전하는 HK-WorldBank 금융망", f_text: "비즈니스 문의 및 파트너십" },
+        en: { h_sub: "Beyond Earth, Launch Your Success into Space", s_title: "Why HK SPACE?", s_desc: "Earth's resources are finite, but space's opportunities are infinite. HK SPACE provides unrivaled fusion energy and intelligent robotics, helping your business transcend the limits of time and space to succeed on a galactic scale. The path we pioneer becomes your new market.", i1: "Robotics", d1: "Autonomous space robot systems expanding customer productivity infinitely.", i2: "Energy", d2: "24/7 infinite clean energy through nuclear fusion for non-stop business.", i3: "Finance", d3: "HK-WorldBank financial network preserving space trade and asset value.", f_text: "Inquiries & Partnership" },
+        zh: { h_sub: "超越地球，将您的成功推向宇宙", s_title: "为什么选择 HK SPACE？", s_desc: "地球资源有限，但宇宙机会无限。HK SPACE 提供无与伦비的核聚变能源和智能机器人技术，助力您的业务突破时空限制，在银河系规模上取得成功。我们开辟的道路即是您的新市场。", i1: "机器人技术", d1: "自主太空机器人系统，无限扩展客户生产力。", i2: "能源", d2: "通过核聚变提供 24/7 无限清洁能源，确保业务不间断。", i3: "金融", d3: "HK-WorldBank 金融网络，保障跨境及星际贸易资产。", f_text: "商务咨询与合作" },
+        ja: { h_sub: "地球を超え、あなたの成功を宇宙へ", s_title: "なぜ HK SPACE なのか？", s_desc: "地球の資源は限られていますが、宇宙の機会は無限です。HK SPACEは独歩的な人工太陽エネルギーと知能型ロボット技術を提供し、お客様のビジネスが時空の制約を離れ、全宇宙的スケールで成功するようサポートします。私たちが開拓する道は、すなわちあなたの新しい市場になります。", i1: "ロボティクス", d1: "顧客の生産性を無限に拡張する自律型宇宙ロボットシステム", i2: "エネルギー", d2: "ビジネスを中断させない24/7無限クリーンエネルギー、核融合技術", i3: "金融", d3: "宇宙貿易と資産価値を保全するHK-WorldBank金融網", f_text: "お問い合わせとパートナーシップ" },
+        ar: { h_sub: "ما وراء الأرض، أطلق نجاحك في الفضاء", s_title: "لماذا HK SPACE؟", s_desc: "موارد الأرض محدودة، لكن فرص الفضاء لا حدود لها. تقدم HK SPACE طاقة اندماج لا مثيل لها وتقنيات روبوتية ذكية، مما يساعد عملك على تجاوز حدود الزمان والمكان للنجاح على نطاق مجري. الطريق الذي نمتلكه يصبح سوقك الجديد.", i1: "الروبوتات", d1: "أنظمة روبوتات فضائية ذاتية القيادة توسع إنتاجية العملاء بشكل لا نهائي.", i2: "الطاقة", d2: "طاقة نظيفة لا نهائية على مدار الساعة طوال أيام الأسبوع من خلال الاندماج النووي لعمل مستمر.", i3: "التمويل", d3: "شبكة HK-WorldBank المالية التي تحافظ على تجارة الفضاء وقيمة الأصول.", f_text: "الاستفسارات والشراكة" },
+        hi: { h_sub: "पृथ्वी से परे, अपनी सफलता को अंतरिक्ष में लॉन्च करें", s_title: "HK SPACE क्यों?", s_desc: "पृथ्वी के संसाधन सीमित हैं, लेकिन अंतरिक्ष के अवसर अनंत हैं। HK SPACE अद्वितीय संलयन ऊर्जा और बुद्धिमान रोबोटिक्स प्रदान करता है, जो आपके व्यवसाय को समय और स्थान की सीमाओं से परे आकाशगंगा के पैमाने पर सफल होने में मदद करता है। जो रास्ता हम तैयार करते हैं वह आपका नया बाजार बन जाता है।", i1: "रोबोटिक्स", d1: "ग्राहक उत्पादकता को असीमित रूप से बढ़ाने वाली स्वायत्त अंतरिक्ष रोबोट प्रणाली।", i2: "ऊर्जा", d2: "निरंतर व्यवसाय के लिए परमाणु संलयन के माध्यम से 24/7 अनंत स्वच्छ ऊर्जा।", i3: "वित्त", d3: "अंतरिक्ष व्यापार और संपत्ति मूल्य को संरक्षित करने वाला HK-WorldBank वित्तीय नेटवर्क।", f_text: "पूछताछ और साझेदारी" },
+        es: { h_sub: "Más allá de la Tierra, lanza tu éxito al espacio", s_title: "¿Por qué HK SPACE?", s_desc: "Los recursos de la Tierra son finitos, pero las oportunidades del espacio son infinitas. HK SPACE proporciona una energía de fusión inigualable y robótica inteligente, ayudando a su negocio a trascender los límites del tiempo y el espacio para triunfar a escala galáctica. El camino que abrimos se convierte en su nuevo mercado.", i1: "Robótica", d1: "Sistemas robóticos espaciales autónomos que expanden la productividad infinitamente.", i2: "Energía", d2: "Energía limpia infinita 24/7 a través de la fusión nuclear para un negocio sin interrupciones.", i3: "Finanzas", d3: "Red financiera HK-WorldBank que preserva el comercio espacial y el valor de los activos.", f_text: "Consultas y Asociación" },
+        pt: { h_sub: "Além da Terra, lance seu sucesso no espaço", s_title: "Por que HK SPACE?", s_desc: "Os recursos da Terra são finitos, mas as oportunidades do espaço são infinitas. A HK SPACE fornece energia de fusão inigualável e robótica inteligente, ajudando seu negócio a transcender os limites do tempo e do espaço para ter sucesso em uma escala galáctica. O caminho que desbravamos se torna seu novo mercado.", i1: "Robótica", d1: "Sistemas robóticos espaciais autónomos que expandem a produtividade infinitamente.", i2: "Energia", d2: "Energia limpa infinita 24/7 através da fusão nuclear para negócios ininterruptos.", i3: "Finanças", d3: "Rede financeira HK-WorldBank preservando o comércio espacial e o valor dos ativos.", f_text: "Consultas e Parcerias" },
+        uk: { h_sub: "За межі Землі, запустіть свій успіх у космос", s_title: "Чому HK SPACE?", s_desc: "Ресурси Землі обмежені, але можливості космосу безмежні. HK SPACE надає неперевершену енергію синтезу та інтелектуальну робототехніку, допомагаючи вашому бізнесу подолати межі часу та простору для успіху в галактичному масштабі. Шлях, який ми прокладаємо, стає вашим новим ринком.", i1: "Робототехніка", d1: "Автономні космічні роботизовані системи, що безмежно розширюють продуктивність.", i2: "Енергія", d2: "Цілодобова нескінченна чиста енергія через ядерний синтез для безперервного бізнесу.", i3: "Фінанси", d3: "Фінансова мережа HK-WorldBank, що зберігає космічну торгівлю та вартість активів.", f_text: "Запити та партнерство" },
+        ru: { h_sub: "За пределами Земли, запустите свой успех в космос", s_title: "Почему HK SPACE?", s_desc: "Ресурсы Земли ограничены, но возможности космоса безграничны. HK SPACE предоставляет непревзойденную энергию синтеза и интеллектуальную робототехнику, помогая вашему бизнесу выйти за пределы времени и пространства для успеха в галактическом масштабе. Путь, который мы прокладываем, станет вашим новым рынком.", i1: "Робототехника", d1: "Автономные космические робототехнические системы, бесконечно расширяющие производительность.", i2: "Энергия", d2: "Круглосуточная бесконечная чистая энергия через термоядерный синтез для непрерывного бизнеса.", i3: "Финансы", d3: "Финансовая сеть HK-WorldBank, сохраняющая космическую торговлю и стоимость активов.", f_text: "Запросы и партнерство" },
+        vi: { h_sub: "Vươn xa Trái Đất, đưa thành công của bạn vào không gian", s_title: "Tại sao chọn HK SPACE?", s_desc: "Nguồn lực Trái Đất có hạn, nhưng cơ hội trong không gian là vô tận. HK SPACE cung cấp năng lượng nhiệt hạch vô đối và công nghệ robot thông minh, giúp doanh nghiệp của bạn vượt qua giới hạn không gian và thời gian để thành công trên quy mô thiên hà. Con đường chúng tôi khai phá sẽ trở thành thị trường mới của bạn.", i1: "Robot học", d1: "Hệ thống robot không gian tự hành mở rộng năng suất khách hàng vô tận.", i2: "Năng lượng", d2: "Năng lượng sạch vô hạn 24/7 thông qua hợp hạch hạt nhân cho kinh doanh không gián đoạn.", i3: "Tài chính", d3: "Mạng lưới tài chính HK-WorldBank bảo tồn giá trị tài sản và thương mại không gian.", f_text: "Yêu cầu & Đối tác" },
+        th: { h_sub: "เหนือกว่าโลก ส่งต่อความสำเร็จของคุณสู่ห้วงอวกาศ", s_title: "ทำไมต้อง HK SPACE?", s_desc: "ทรัพยากรบนโลกมีจำกัด แต่โอกาสในอวกาศนั้นไร้ขีดจำกัด HK SPACE มอบพลังงานนิวเคลียร์ฟิวชันและเทคโนโลยีหุ่นยนต์อัจฉริยะที่เหนือชั้น ช่วยให้ธุรกิจของคุณก้าวข้ามขีดจำกัดของเวลาและสถานที่เพื่อความสำเร็จในระดับกาแล็กซี เส้นทางที่เราบุกเบิกจะกลายเป็นตลาดใหม่ของคุณ", i1: "หุ่นยนต์", d1: "ระบบหุ่นยนต์อวกาศอัตโนมัติที่ขยายขีดความสามารถในการผลิตของลูกค้าอย่างไม่มีที่สิ้นสุด", i2: "พลังงาน", d2: "พลังงานสะอาดไร้ขีดจำกัดตลอด 24 ชั่วโมงผ่านฟิวชันเพื่อธุรกิจที่ไม่หยุดนิ่ง", i3: "การเงิน", d3: "เครือข่ายการเงิน HK-WorldBank ที่รักษาการค้าและมูลค่าทรัพย์สินในอวกาศ", f_text: "สอบถามข้อมูลและพันธมิตร" },
+        id: { h_sub: "Melampaui Bumi, Luncurkan Kesuksesan Anda ke Luar Angkasa", s_title: "Mengapa HK SPACE?", s_desc: "Sumber daya Bumi terbatas, namun peluang luar angkasa tidak terbatas. HK SPACE menyediakan energi fusi yang tak tertandingi dan robotika cerdas, membantu bisnis Anda melampaui batasan waktu dan ruang untuk sukses dalam skala galaksi. Jalan yang kami rintis akan menjadi pasar baru Anda.", i1: "Robotika", d1: "Sistem robot luar angkasa otonom yang memperluas produktivitas pelanggan tanpa batas.", i2: "Energi", d2: "Energi bersih tak terbatas 24/7 melalui fusi nuklir untuk bisnis tanpa henti.", i3: "Keuangan", d3: "Jaringan keuangan HK-WorldBank yang menjaga nilai aset dan perdagangan luar angkasa.", f_text: "Pertanyaan & Kemitraan" }
     };
 
-    function changeLanguage() {
-        const l = document.getElementById('langSelect').value;
-        const res = dict[l] || dict['en'];
-        document.getElementById('t1').innerHTML = l === 'ko' ? `UNIVERSE <span class="highlight">IS OUR FIELD</span>` : res[0];
-        document.getElementById('t2').innerText = res[1];
-        document.getElementById('t3').innerText = res[2];
-        document.getElementById('t4').innerText = res[3];
-        document.getElementById('i1').innerText = res[4];
-        document.getElementById('d1').innerText = res[5];
-        document.getElementById('i2').innerText = res[6];
-        document.getElementById('d2').innerText = res[7];
-        document.getElementById('i3').innerText = res[8];
-        document.getElementById('d3').innerText = res[9];
-        document.getElementById('i4').innerText = res[10];
-        document.getElementById('d4').innerText = res[11];
+    function translatePage() {
+        const lang = document.getElementById('langSelect').value;
+        const set = translations[lang];
+        document.getElementById('h-sub').innerText = set.h_sub;
+        document.getElementById('s-title').innerText = set.s_title;
+        document.getElementById('s-desc').innerHTML = set.s_desc;
+        document.getElementById('i1').innerText = set.i1;
+        document.getElementById('d1').innerText = set.d1;
+        document.getElementById('i2').innerText = set.i2;
+        document.getElementById('d2').innerText = set.d2;
+        document.getElementById('i3').innerText = set.i3;
+        document.getElementById('d3').innerText = set.d3;
+        document.getElementById('f-text').innerText = set.f_text;
     }
+
+    // 우주 별 애니메이션
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = [];
+        for(let i=0; i<200; i++) {
+            stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5 });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        stars.forEach(s => {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+            ctx.fill();
+            s.y -= s.speed;
+            if(s.y < 0) s.y = canvas.height;
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    animate();
 </script>
+
 </body>
 </html>
