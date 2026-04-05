@@ -3,80 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK Group - Universe Multi-Language</title>
+    <title>HK Group - Grand Universe</title>
     <style>
-        /* 기본 배경 설정 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;500;700&display=swap');
+
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #050505;
             color: white;
-            font-family: 'Pretendard', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* 우측 상단 언어 선택 박스 */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
+        /* 고정 배경 (우주) */
+        #universe-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1b2735 0%, #000 100%);
+            z-index: -1;
         }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: moveStar linear infinite;
+        }
+
+        @keyframes moveStar {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100vh); }
+        }
+
+        /* 상단 네비게이션 및 언어 선택 */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: 3px; color: #4dafff; }
 
         select {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 15px;
-            border-radius: 4px;
-            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 12px;
+            border-radius: 5px;
             cursor: pointer;
-            outline: none;
-            font-size: 0.9rem;
         }
 
-        select option {
-            background: #1B2735;
-            color: white;
-        }
-
-        /* 별과 오로라 애니메이션 */
-        .stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle var(--duration) infinite ease-in-out; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
-        .aurora { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05), transparent 50%); filter: blur(50px); z-index: 0; }
-
-        /* 중앙 콘텐츠 */
-        .content {
-            position: relative;
-            z-index: 1;
+        /* 섹션 공통 */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
             text-align: center;
-            transition: all 0.5s ease;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            letter-spacing: 8px;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #fff, #4dafff);
+        /* 히어로 섹션 */
+        .hero h1 {
+            font-size: 5rem;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 40%, #4dafff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 100;
         }
 
-        p { font-size: 1.2rem; opacity: 0.8; letter-spacing: 2px; height: 1.5rem; }
+        .hero p { font-size: 1.5rem; letter-spacing: 5px; opacity: 0.7; }
+
+        /* 산업 그리드 섹션 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(77, 175, 255, 0.1);
+            border-color: #4dafff;
+        }
+
+        .card h3 { color: #4dafff; font-size: 1.5rem; margin-bottom: 15px; }
+        .card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; }
+
+        /* 푸터 */
+        footer {
+            padding: 50px;
+            background: rgba(0,0,0,0.8);
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .highlight { color: #4dafff; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="aurora"></div>
-    <div class="stars" id="starField"></div>
+    <div id="universe-bg"></div>
 
-    <div class="language-selector">
-        <select id="langSelect" onchange="changeLanguage()">
+    <nav>
+        <div class="logo">HK GROUP</div>
+        <select id="langSelect" onchange="updateLang()">
             <option value="ko">한국어</option>
             <option value="en">English</option>
             <option value="zh">中国语</option>
@@ -91,53 +147,92 @@
             <option value="th">ไทย</option>
             <option value="id">Bahasa Indonesia</option>
         </select>
-    </div>
+    </nav>
 
-    <div class="content">
-        <h1>HK GROUP</h1>
-        <p id="subText">지구를 넘어, 미래를 향해</p>
-    </div>
+    <section class="hero">
+        <h1 id="mainTitle">HK GROUP</h1>
+        <p id="heroSub">Infinite Vision, Future Reality</p>
+        <div style="margin-top: 50px; border-bottom: 2px solid #4dafff; width: 100px;"></div>
+    </section>
+
+    <section id="vision">
+        <h2 id="visionTitle" style="font-size: 2.5rem;">7 Future Core Industries</h2>
+        <div class="grid-container">
+            <div class="card">
+                <h3>Robotics</h3>
+                <p id="desc1">인류의 한계를 넘어서는 휴머노이드 로봇 기술로 새로운 노동의 정의를 세웁니다.</p>
+            </div>
+            <div class="card">
+                <h3>Nuclear Fusion</h3>
+                <p id="desc2">인공태양을 통한 무한하고 깨끗한 에너지 인프라를 구축합니다.</p>
+            </div>
+            <div class="card">
+                <h3>Quantum Bio</h3>
+                <p id="desc3">양자 컴퓨팅과 바이오 기술의 결합으로 생명의 신비를 해독합니다.</p>
+            </div>
+            <div class="card">
+                <h3>HK-WorldBank</h3>
+                <p id="desc4">전 세계를 하나로 연결하는 차세대 디지털 금융 생태계를 선도합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 style="font-size: 2rem;">Global Gateway</h2>
+        <p style="max-width: 700px; line-height: 2;">
+            HK 그룹은 우주 산업, 홀로그램 통신, UAM 등 상상을 현실로 바꾸는 프로젝트를 진행 중입니다. 
+            우리의 기술은 국경을 넘어 인류의 내일을 바꿀 것입니다.
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 HK GROUP. All Rights Reserved.</p>
+    </footer>
 
     <script>
-        // 언어별 데이터
-        const translations = {
-            ko: "지구를 넘어, 미래를 향해",
-            en: "Beyond the Earth, Towards the Future",
-            zh: "超越地球，走向未来",
-            ar: "ما وراء الأرض، نحو المستقبل",
-            hi: "पृथ्वी से परे, भविष्य की ओर",
-            es: "Más allá de la Tierra, hacia el futuro",
-            pt: "Além da Terra, em direção ao futuro",
-            uk: "За межі Землі, назустріч майбутньому",
-            ja: "地球を超えて、未来へ",
-            ru: "За пределами Земли, навстречу будущему",
-            vi: "Vươn xa khỏi Trái Đất, hướng tới tương lai",
-            th: "เหนือกว่าโลก สู่ 미래",
-            id: "Melampaui Bumi, Menuju Masa Depan"
-        };
-
-        function changeLanguage() {
-            const select = document.getElementById('langSelect');
-            const subText = document.getElementById('subText');
-            subText.style.opacity = 0; // 페이드 아웃 효과
-            
-            setTimeout(() => {
-                subText.innerText = translations[select.value];
-                subText.style.opacity = 0.8; // 페이드 인 효과
-            }, 300);
-        }
-
-        // 별 생성 스크립트
-        const starField = document.getElementById('starField');
-        for (let i = 0; i < 150; i++) {
+        // 배경 별 생성
+        const bg = document.getElementById('universe-bg');
+        for (let i = 0; i < 200; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            const size = Math.random() * 3 + 'px';
-            star.style.width = size; star.style.height = size;
-            star.style.top = Math.random() * 100 + '%';
+            const size = Math.random() * 2;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
             star.style.left = Math.random() * 100 + '%';
-            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-            starField.appendChild(star);
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDuration = (Math.random() * 50 + 50) + 's';
+            bg.appendChild(star);
+        }
+
+        const data = {
+            ko: {
+                hero: "지구를 넘어, 미래를 향해",
+                vTitle: "7대 핵심 미래 산업",
+                d1: "인류의 한계를 넘어서는 휴머노이드 로봇 기술로 새로운 노동의 정의를 세웁니다.",
+                d2: "인공태양을 통한 무한하고 깨끗한 에너지 인프라를 구축합니다.",
+                d3: "양자 컴퓨팅과 바이오 기술의 결합으로 생명의 신비를 해독합니다.",
+                d4: "전 세계를 하나로 연결하는 차세대 디지털 금융 생태계를 선도합니다."
+            },
+            en: {
+                hero: "Beyond the Earth, Towards the Future",
+                vTitle: "7 Core Future Industries",
+                d1: "Redefining labor with humanoid robotics that surpass human limits.",
+                d2: "Building infinite clean energy infrastructure through Artificial Sun.",
+                d3: "Decoding life's mysteries via Quantum-Bio convergence.",
+                d4: "Leading the next-gen digital financial ecosystem globally."
+            }
+            // ... 다른 언어들도 이와 같은 방식으로 확장 가능합니다.
+        };
+
+        function updateLang() {
+            const l = document.getElementById('langSelect').value;
+            const content = data[l] || data['en']; // 해당 언어 없으면 영어로
+            document.getElementById('heroSub').innerText = content.hero;
+            document.getElementById('visionTitle').innerText = content.vTitle;
+            document.getElementById('desc1').innerText = content.d1;
+            document.getElementById('desc2').innerText = content.d2;
+            document.getElementById('desc3').innerText = content.d3;
+            document.getElementById('desc4').innerText = content.d4;
         }
     </script>
 </body>
